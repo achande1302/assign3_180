@@ -6,18 +6,19 @@ $("document").ready(function(){
     $.get(url,function(data, status){
         if (status == "success"){
             menu_items = data.menu_items;
+            console.log(menu_items.length);
             for (const key in data.menu_items) {
-                let opt = document.createElement("option");
-                opt.textContent = data.menu_items[key].name;
-                opt.value = key; 
-                document.querySelector('#restaurant').appendChild(opt);
+                let opti = document.createElement("option");
+                opti.textContent = data.menu_items[key].name;
+                opti.value = key; 
+                document.querySelector('#restaurant').appendChild(opti);
             }
-            createoptions();
+            optionslist();
         }
        
     });
 
-    function createoptions(){
+    function optionslist(){
         let i=0;
         if(menu_items != null){
             for(const jsonobj of menu_items){
@@ -25,36 +26,32 @@ $("document").ready(function(){
                 
             }
         }
-    }
+    }  
+document.querySelector("#restaurant").addEventListener("change",displayorder);
 
-    
-document.querySelector("#restaurant").addEventListener("change",showdetails);
-
-function showdetails(e){
+function displayorder(e){
     let index = e.target.value;
     
     if(menu_items != null){
         let x = menu_items[index];
-        let pricesmall = x.price_small;
+        let psmall = x.price_small;
         
-        if(pricesmall == null){
-            pricesmall = "Not available";
+        if(psmall == null){
+            psmall = "Not available";
         }
-        let descrp = x.description;
-        if(descrp == ""){
-            descrp = "Description not available";
+        let descriptionx = x.description;
+        if(descriptionx == ""){
+            descriptionx = "Description not available";
         }
         document.querySelector("#menuname").textContent = x.name;
         document.querySelector("#id").textContent = x.id;
         document.querySelector("#sname").textContent = x.short_name;
-        document.querySelector("#descp").textContent = descrp;
-        document.querySelector("#psmall").textContent = pricesmall;
-        document.querySelector("#plarge").textContent = x.price_large;
+        document.querySelector("#descp").textContent = descriptionx;
+        document.querySelector("#psmall").textContent = psmall;
+        document.querySelector("#plarge").textContent = x.plarge;
     }
-    document.getElementById("table").style.display = "block";
+    document.getElementById("tables").style.display = "block";
 }
 
 
 });
-
-
